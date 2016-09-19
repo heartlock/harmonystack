@@ -1,7 +1,7 @@
 # harmonystack
- middle layer between harmonycloud and sdn
+ middle layer between harmonycloud and opendaylight
 
-# OpenStack Network Provider for Kubernetes
+# OpenDaylight Network Provider for Kubernetes
 
 HarmonyStack is an sdn network provider for kubernetes. HarmonyStack is devided into two functions:
 
@@ -10,7 +10,7 @@ HarmonyStack is an sdn network provider for kubernetes. HarmonyStack is devided 
 
 ## How to run it
 
-Notes: You need a working SDN and Kubernetes before deploying HarmonyStack.
+Notes: You need a working OpenDaylight and Kubernetes before deploying HarmonyStack.
 
 
 ```
@@ -21,7 +21,7 @@ cd harmonystack
 make && make install
 ```
 
-Configure sdn authorization properties in `/etc/kubestack.conf`:
+Configure OpenDaylight authorization properties in `/etc/harmonystack.conf`:
 
 ```
 [Global]
@@ -45,11 +45,11 @@ plugin-name = ovs
 Start:
 
 ```
-# Start kubestack on each machine
+# Start harmonystack on each machine
 harmonystack -logtostderr=true -v=4 -port=:4237
 ```
 
-Configure kubernetes `controller-manager` and `kubelet` using openstack network provider:
+Configure kubernetes `controller-manager` and `kubelet` using opendaylight network provider:
 
 ```
 kube-controller-manager --network-provider=127.0.0.1:4237 --...
