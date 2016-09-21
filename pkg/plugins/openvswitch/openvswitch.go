@@ -26,8 +26,8 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/ports"
-	"github.com/hyperhq/kubestack/pkg/exec"
-	"github.com/hyperhq/kubestack/pkg/plugins"
+	"github.com/heartlock/harmonystack/pkg/exec"
+	"github.com/heartlock/harmonystack/pkg/plugins"
 )
 
 const (
