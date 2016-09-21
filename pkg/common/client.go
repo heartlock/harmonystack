@@ -25,7 +25,6 @@ import (
 	"strings"
 
 	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/layer3/routers"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/portsbinding"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/networks"
@@ -44,7 +43,7 @@ type OpenDaylightClient struct {
 func NewOpenDaylightClient(config *Config) (OpenDaylightClient, error) {
 	return OpenDaylightClient{
 		BaseUrl:    config.Global.Url,
-		HTTPClient: http.DefaultClient,
+		HTTPClient: *http.DefaultClient,
 	}, nil
 
 }
@@ -447,7 +446,7 @@ func (client *OpenDaylightClient) ListPort(opts ports.ListOpts) pagination.Pager
 	})
 }
 
-func (client *OpenDaylightClient) UpdatePort(portId string, opts portsbinding.UpdateOpts) (r UpdateResult) {
+func (client *OpenDaylightClient) UpdatePort(portId string, opts portsbinding.UpdateOpts) (r portsbinding.UpdateResult) {
 	url := client.BaseUrl + "/v2.0/port/" + portId
 	b, err := opts.ToPortUpdateMap()
 	if err != nil {
@@ -461,7 +460,7 @@ func (client *OpenDaylightClient) UpdatePort(portId string, opts portsbinding.Up
 }
 
 //router
-func (client *OpenDaylightClient) CreateRouter(opts routers.CreateOpts) {
+func (client *OpenDaylightClient) CreateRouter(opts routers.CreateOpts) (r routers.CreateResult) {
 	url := client.BaseUrl + "/v2.0/routers"
 	b, err := opts.ToRouterCreateMap()
 	if err != nil {
@@ -472,7 +471,7 @@ func (client *OpenDaylightClient) CreateRouter(opts routers.CreateOpts) {
 	return
 }
 
-func (client *OpenDaylightClient) DeleteRouter(routerId string) {
+func (client *OpenDaylightClient) DeleteRouter(routerId string) (r routers.DeleteResult) {
 	url := client.BaseUrl + "/v2.0/routers/" + routerId
 	_, r.Err = client.Delete(url, nil)
 	return
@@ -495,7 +494,7 @@ func (client *OpenDaylightClient) UpdateRouter() {
 }
 
 // interface
-func (client *OpenDaylightClient) AddInterface(routerId string, opts routers.AddInterfaceOpts) (r InterfaceResult) {
+func (client *OpenDaylightClient) AddInterface(routerId string, opts routers.AddInterfaceOpts) (r routers.InterfaceResult) {
 	url := client.BaseUrl + "/v2.0/routers/" + routerId
 	b, err := opts.ToRouterAddInterfaceMap()
 	if err != nil {
@@ -508,7 +507,7 @@ func (client *OpenDaylightClient) AddInterface(routerId string, opts routers.Add
 	return
 }
 
-func (client *OpenDaylightClient) RemoveInterface(routerId string, opts routers.RemoveInterfaceOpts) (r InterfaceResult) {
+func (client *OpenDaylightClient) RemoveInterface(routerId string, opts routers.RemoveInterfaceOpts) (r routers.InterfaceResult) {
 	url := client.BaseUrl + "/v2.0/routers/" + routerId
 	b, err := opts.ToRouterRemoveInterfaceMap()
 	if err != nil {
