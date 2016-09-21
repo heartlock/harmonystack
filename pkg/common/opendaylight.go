@@ -108,7 +108,7 @@ func NewOpenDaylight(config io.Reader) (*OpenDaylight, error) {
 		return nil, err
 	}
 
-	odl, err := NewOpenDaylight(&cfg)
+	odl, err := NewOpenDaylightClient(&cfg)
 	if err != nil {
 		glog.Warning("Failed to create opendaylight client: %v", err)
 		return nil, err
@@ -322,7 +322,7 @@ func (os *OpenDaylight) CreateNetwork(network *provider.Network) error {
 		s, err := os.odlclient.CreateSubnet(subnetOpts).Extract()
 		if err != nil {
 			glog.Errorf("Create opendaylight subnet %s failed: %v", sub.Name, err)
-			delErr := os.odlClient.DeleteNetwork(network.Name)
+			delErr := os.DeleteNetwork(network.Name)
 			if delErr != nil {
 				glog.Errorf("Delete opendaylight network %s failed: %v", network.Name, delErr)
 			}
@@ -518,7 +518,7 @@ func (os *OpenDaylight) CreatePort(networkID, tenantID, portName, podHostname st
 	updateOpts := portsbinding.UpdateOpts{
 		DNSName: podHostname,
 	}
-	_, err = os.odlClient.UpdatePort(os.network, port.ID, updateOpts).Extract()
+	_, err = os.odlClient.UpdatePort(port.ID, updateOpts).Extract()
 	if err != nil {
 		os.odlClient.DeletePort(port.ID)
 		glog.Errorf("Update port %s failed: %v", portName, err)
