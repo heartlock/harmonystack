@@ -3,7 +3,7 @@
 
 all: harmonystack
 
-kubestack:
+harmonystack:
 	go build harmonystack.go
 
 install:
