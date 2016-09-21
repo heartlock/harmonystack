@@ -52,38 +52,29 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
-
 type ActiveRequest struct {
 }
 
-func (m *ActiveRequest) Reset()                    { *m = ActiveRequest{} }
-func (m *ActiveRequest) String() string            { return proto.CompactTextString(m) }
-func (*ActiveRequest) ProtoMessage()               {}
-func (*ActiveRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{0} }
+func (m *ActiveRequest) Reset()         { *m = ActiveRequest{} }
+func (m *ActiveRequest) String() string { return proto.CompactTextString(m) }
+func (*ActiveRequest) ProtoMessage()    {}
 
 type ActivateResponse struct {
 	Result bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
 	Error  string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *ActivateResponse) Reset()                    { *m = ActivateResponse{} }
-func (m *ActivateResponse) String() string            { return proto.CompactTextString(m) }
-func (*ActivateResponse) ProtoMessage()               {}
-func (*ActivateResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{1} }
+func (m *ActivateResponse) Reset()         { *m = ActivateResponse{} }
+func (m *ActivateResponse) String() string { return proto.CompactTextString(m) }
+func (*ActivateResponse) ProtoMessage()    {}
 
 type CommonResponse struct {
 	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *CommonResponse) Reset()                    { *m = CommonResponse{} }
-func (m *CommonResponse) String() string            { return proto.CompactTextString(m) }
-func (*CommonResponse) ProtoMessage()               {}
-func (*CommonResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{2} }
+func (m *CommonResponse) Reset()         { *m = CommonResponse{} }
+func (m *CommonResponse) String() string { return proto.CompactTextString(m) }
+func (*CommonResponse) ProtoMessage()    {}
 
 // Subnet is a representaion of a subnet
 type Subnet struct {
@@ -96,10 +87,9 @@ type Subnet struct {
 	Routes     []*Route `protobuf:"bytes,7,rep,name=routes" json:"routes,omitempty"`
 }
 
-func (m *Subnet) Reset()                    { *m = Subnet{} }
-func (m *Subnet) String() string            { return proto.CompactTextString(m) }
-func (*Subnet) ProtoMessage()               {}
-func (*Subnet) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{3} }
+func (m *Subnet) Reset()         { *m = Subnet{} }
+func (m *Subnet) String() string { return proto.CompactTextString(m) }
+func (*Subnet) ProtoMessage()    {}
 
 func (m *Subnet) GetRoutes() []*Route {
 	if m != nil {
@@ -115,10 +105,9 @@ type Route struct {
 	DestinationCIDR string `protobuf:"bytes,3,opt,name=destinationCIDR,proto3" json:"destinationCIDR,omitempty"`
 }
 
-func (m *Route) Reset()                    { *m = Route{} }
-func (m *Route) String() string            { return proto.CompactTextString(m) }
-func (*Route) ProtoMessage()               {}
-func (*Route) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{4} }
+func (m *Route) Reset()         { *m = Route{} }
+func (m *Route) String() string { return proto.CompactTextString(m) }
+func (*Route) ProtoMessage()    {}
 
 type Network struct {
 	Name      string    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -131,10 +120,9 @@ type Network struct {
 	Status string `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`
 }
 
-func (m *Network) Reset()                    { *m = Network{} }
-func (m *Network) String() string            { return proto.CompactTextString(m) }
-func (*Network) ProtoMessage()               {}
-func (*Network) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{5} }
+func (m *Network) Reset()         { *m = Network{} }
+func (m *Network) String() string { return proto.CompactTextString(m) }
+func (*Network) ProtoMessage()    {}
 
 func (m *Network) GetSubnets() []*Subnet {
 	if m != nil {
@@ -148,20 +136,18 @@ type GetNetworkRequest struct {
 	Id   string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (m *GetNetworkRequest) Reset()                    { *m = GetNetworkRequest{} }
-func (m *GetNetworkRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetNetworkRequest) ProtoMessage()               {}
-func (*GetNetworkRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{6} }
+func (m *GetNetworkRequest) Reset()         { *m = GetNetworkRequest{} }
+func (m *GetNetworkRequest) String() string { return proto.CompactTextString(m) }
+func (*GetNetworkRequest) ProtoMessage()    {}
 
 type GetNetworkResponse struct {
 	Network *Network `protobuf:"bytes,1,opt,name=network" json:"network,omitempty"`
 	Error   string   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *GetNetworkResponse) Reset()                    { *m = GetNetworkResponse{} }
-func (m *GetNetworkResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetNetworkResponse) ProtoMessage()               {}
-func (*GetNetworkResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{7} }
+func (m *GetNetworkResponse) Reset()         { *m = GetNetworkResponse{} }
+func (m *GetNetworkResponse) String() string { return proto.CompactTextString(m) }
+func (*GetNetworkResponse) ProtoMessage()    {}
 
 func (m *GetNetworkResponse) GetNetwork() *Network {
 	if m != nil {
@@ -174,10 +160,9 @@ type CreateNetworkRequest struct {
 	Network *Network `protobuf:"bytes,1,opt,name=network" json:"network,omitempty"`
 }
 
-func (m *CreateNetworkRequest) Reset()                    { *m = CreateNetworkRequest{} }
-func (m *CreateNetworkRequest) String() string            { return proto.CompactTextString(m) }
-func (*CreateNetworkRequest) ProtoMessage()               {}
-func (*CreateNetworkRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{8} }
+func (m *CreateNetworkRequest) Reset()         { *m = CreateNetworkRequest{} }
+func (m *CreateNetworkRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateNetworkRequest) ProtoMessage()    {}
 
 func (m *CreateNetworkRequest) GetNetwork() *Network {
 	if m != nil {
@@ -190,10 +175,9 @@ type UpdateNetworkRequest struct {
 	Network *Network `protobuf:"bytes,1,opt,name=network" json:"network,omitempty"`
 }
 
-func (m *UpdateNetworkRequest) Reset()                    { *m = UpdateNetworkRequest{} }
-func (m *UpdateNetworkRequest) String() string            { return proto.CompactTextString(m) }
-func (*UpdateNetworkRequest) ProtoMessage()               {}
-func (*UpdateNetworkRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{9} }
+func (m *UpdateNetworkRequest) Reset()         { *m = UpdateNetworkRequest{} }
+func (m *UpdateNetworkRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateNetworkRequest) ProtoMessage()    {}
 
 func (m *UpdateNetworkRequest) GetNetwork() *Network {
 	if m != nil {
@@ -206,29 +190,26 @@ type DeleteNetworkRequest struct {
 	NetworkName string `protobuf:"bytes,1,opt,name=networkName,proto3" json:"networkName,omitempty"`
 }
 
-func (m *DeleteNetworkRequest) Reset()                    { *m = DeleteNetworkRequest{} }
-func (m *DeleteNetworkRequest) String() string            { return proto.CompactTextString(m) }
-func (*DeleteNetworkRequest) ProtoMessage()               {}
-func (*DeleteNetworkRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{10} }
+func (m *DeleteNetworkRequest) Reset()         { *m = DeleteNetworkRequest{} }
+func (m *DeleteNetworkRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteNetworkRequest) ProtoMessage()    {}
 
 type GetLoadBalancerRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 }
 
-func (m *GetLoadBalancerRequest) Reset()                    { *m = GetLoadBalancerRequest{} }
-func (m *GetLoadBalancerRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetLoadBalancerRequest) ProtoMessage()               {}
-func (*GetLoadBalancerRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{11} }
+func (m *GetLoadBalancerRequest) Reset()         { *m = GetLoadBalancerRequest{} }
+func (m *GetLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
+func (*GetLoadBalancerRequest) ProtoMessage()    {}
 
 type GetLoadBalancerResponse struct {
 	LoadBalancer *LoadBalancer `protobuf:"bytes,1,opt,name=loadBalancer" json:"loadBalancer,omitempty"`
 	Error        string        `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *GetLoadBalancerResponse) Reset()                    { *m = GetLoadBalancerResponse{} }
-func (m *GetLoadBalancerResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetLoadBalancerResponse) ProtoMessage()               {}
-func (*GetLoadBalancerResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{12} }
+func (m *GetLoadBalancerResponse) Reset()         { *m = GetLoadBalancerResponse{} }
+func (m *GetLoadBalancerResponse) String() string { return proto.CompactTextString(m) }
+func (*GetLoadBalancerResponse) ProtoMessage()    {}
 
 func (m *GetLoadBalancerResponse) GetLoadBalancer() *LoadBalancer {
 	if m != nil {
@@ -244,10 +225,9 @@ type HostPort struct {
 	TargetPort  int32  `protobuf:"varint,4,opt,name=targetPort,proto3" json:"targetPort,omitempty"`
 }
 
-func (m *HostPort) Reset()                    { *m = HostPort{} }
-func (m *HostPort) String() string            { return proto.CompactTextString(m) }
-func (*HostPort) ProtoMessage()               {}
-func (*HostPort) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{13} }
+func (m *HostPort) Reset()         { *m = HostPort{} }
+func (m *HostPort) String() string { return proto.CompactTextString(m) }
+func (*HostPort) ProtoMessage()    {}
 
 // LoadBalancer is a replace of kube-proxy, so load-balancing can be handled
 // by network providers so as to overcome iptables overhead
@@ -264,10 +244,9 @@ type LoadBalancer struct {
 	Hosts           []*HostPort `protobuf:"bytes,9,rep,name=hosts" json:"hosts,omitempty"`
 }
 
-func (m *LoadBalancer) Reset()                    { *m = LoadBalancer{} }
-func (m *LoadBalancer) String() string            { return proto.CompactTextString(m) }
-func (*LoadBalancer) ProtoMessage()               {}
-func (*LoadBalancer) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{14} }
+func (m *LoadBalancer) Reset()         { *m = LoadBalancer{} }
+func (m *LoadBalancer) String() string { return proto.CompactTextString(m) }
+func (*LoadBalancer) ProtoMessage()    {}
 
 func (m *LoadBalancer) GetSubnets() []*Subnet {
 	if m != nil {
@@ -289,10 +268,9 @@ type CreateLoadBalancerRequest struct {
 	Affinity string `protobuf:"bytes,2,opt,name=affinity,proto3" json:"affinity,omitempty"`
 }
 
-func (m *CreateLoadBalancerRequest) Reset()                    { *m = CreateLoadBalancerRequest{} }
-func (m *CreateLoadBalancerRequest) String() string            { return proto.CompactTextString(m) }
-func (*CreateLoadBalancerRequest) ProtoMessage()               {}
-func (*CreateLoadBalancerRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{15} }
+func (m *CreateLoadBalancerRequest) Reset()         { *m = CreateLoadBalancerRequest{} }
+func (m *CreateLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateLoadBalancerRequest) ProtoMessage()    {}
 
 func (m *CreateLoadBalancerRequest) GetLoadBalancer() *LoadBalancer {
 	if m != nil {
@@ -306,10 +284,9 @@ type CreateLoadBalancerResponse struct {
 	Error string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *CreateLoadBalancerResponse) Reset()                    { *m = CreateLoadBalancerResponse{} }
-func (m *CreateLoadBalancerResponse) String() string            { return proto.CompactTextString(m) }
-func (*CreateLoadBalancerResponse) ProtoMessage()               {}
-func (*CreateLoadBalancerResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{16} }
+func (m *CreateLoadBalancerResponse) Reset()         { *m = CreateLoadBalancerResponse{} }
+func (m *CreateLoadBalancerResponse) String() string { return proto.CompactTextString(m) }
+func (*CreateLoadBalancerResponse) ProtoMessage()    {}
 
 type UpdateLoadBalancerRequest struct {
 	Name        string      `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -317,10 +294,9 @@ type UpdateLoadBalancerRequest struct {
 	Hosts       []*HostPort `protobuf:"bytes,3,rep,name=hosts" json:"hosts,omitempty"`
 }
 
-func (m *UpdateLoadBalancerRequest) Reset()                    { *m = UpdateLoadBalancerRequest{} }
-func (m *UpdateLoadBalancerRequest) String() string            { return proto.CompactTextString(m) }
-func (*UpdateLoadBalancerRequest) ProtoMessage()               {}
-func (*UpdateLoadBalancerRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{17} }
+func (m *UpdateLoadBalancerRequest) Reset()         { *m = UpdateLoadBalancerRequest{} }
+func (m *UpdateLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateLoadBalancerRequest) ProtoMessage()    {}
 
 func (m *UpdateLoadBalancerRequest) GetHosts() []*HostPort {
 	if m != nil {
@@ -334,38 +310,34 @@ type UpdateLoadBalancerResponse struct {
 	Error string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *UpdateLoadBalancerResponse) Reset()                    { *m = UpdateLoadBalancerResponse{} }
-func (m *UpdateLoadBalancerResponse) String() string            { return proto.CompactTextString(m) }
-func (*UpdateLoadBalancerResponse) ProtoMessage()               {}
-func (*UpdateLoadBalancerResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{18} }
+func (m *UpdateLoadBalancerResponse) Reset()         { *m = UpdateLoadBalancerResponse{} }
+func (m *UpdateLoadBalancerResponse) String() string { return proto.CompactTextString(m) }
+func (*UpdateLoadBalancerResponse) ProtoMessage()    {}
 
 type DeleteLoadBalancerRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 }
 
-func (m *DeleteLoadBalancerRequest) Reset()                    { *m = DeleteLoadBalancerRequest{} }
-func (m *DeleteLoadBalancerRequest) String() string            { return proto.CompactTextString(m) }
-func (*DeleteLoadBalancerRequest) ProtoMessage()               {}
-func (*DeleteLoadBalancerRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{19} }
+func (m *DeleteLoadBalancerRequest) Reset()         { *m = DeleteLoadBalancerRequest{} }
+func (m *DeleteLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteLoadBalancerRequest) ProtoMessage()    {}
 
 type CheckTenantIDRequest struct {
 	TenantID string `protobuf:"bytes,1,opt,name=tenantID,proto3" json:"tenantID,omitempty"`
 }
 
-func (m *CheckTenantIDRequest) Reset()                    { *m = CheckTenantIDRequest{} }
-func (m *CheckTenantIDRequest) String() string            { return proto.CompactTextString(m) }
-func (*CheckTenantIDRequest) ProtoMessage()               {}
-func (*CheckTenantIDRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{20} }
+func (m *CheckTenantIDRequest) Reset()         { *m = CheckTenantIDRequest{} }
+func (m *CheckTenantIDRequest) String() string { return proto.CompactTextString(m) }
+func (*CheckTenantIDRequest) ProtoMessage()    {}
 
 type CheckTenantIDResponse struct {
 	Result bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
 	Error  string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *CheckTenantIDResponse) Reset()                    { *m = CheckTenantIDResponse{} }
-func (m *CheckTenantIDResponse) String() string            { return proto.CompactTextString(m) }
-func (*CheckTenantIDResponse) ProtoMessage()               {}
-func (*CheckTenantIDResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{21} }
+func (m *CheckTenantIDResponse) Reset()         { *m = CheckTenantIDResponse{} }
+func (m *CheckTenantIDResponse) String() string { return proto.CompactTextString(m) }
+func (*CheckTenantIDResponse) ProtoMessage()    {}
 
 type SetupPodRequest struct {
 	PodName             string   `protobuf:"bytes,1,opt,name=podName,proto3" json:"podName,omitempty"`
@@ -375,10 +347,9 @@ type SetupPodRequest struct {
 	Network             *Network `protobuf:"bytes,5,opt,name=network" json:"network,omitempty"`
 }
 
-func (m *SetupPodRequest) Reset()                    { *m = SetupPodRequest{} }
-func (m *SetupPodRequest) String() string            { return proto.CompactTextString(m) }
-func (*SetupPodRequest) ProtoMessage()               {}
-func (*SetupPodRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{22} }
+func (m *SetupPodRequest) Reset()         { *m = SetupPodRequest{} }
+func (m *SetupPodRequest) String() string { return proto.CompactTextString(m) }
+func (*SetupPodRequest) ProtoMessage()    {}
 
 func (m *SetupPodRequest) GetNetwork() *Network {
 	if m != nil {
@@ -395,10 +366,9 @@ type TeardownPodRequest struct {
 	Network             *Network `protobuf:"bytes,5,opt,name=network" json:"network,omitempty"`
 }
 
-func (m *TeardownPodRequest) Reset()                    { *m = TeardownPodRequest{} }
-func (m *TeardownPodRequest) String() string            { return proto.CompactTextString(m) }
-func (*TeardownPodRequest) ProtoMessage()               {}
-func (*TeardownPodRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{23} }
+func (m *TeardownPodRequest) Reset()         { *m = TeardownPodRequest{} }
+func (m *TeardownPodRequest) String() string { return proto.CompactTextString(m) }
+func (*TeardownPodRequest) ProtoMessage()    {}
 
 func (m *TeardownPodRequest) GetNetwork() *Network {
 	if m != nil {
@@ -415,10 +385,9 @@ type PodStatusRequest struct {
 	Network             *Network `protobuf:"bytes,5,opt,name=network" json:"network,omitempty"`
 }
 
-func (m *PodStatusRequest) Reset()                    { *m = PodStatusRequest{} }
-func (m *PodStatusRequest) String() string            { return proto.CompactTextString(m) }
-func (*PodStatusRequest) ProtoMessage()               {}
-func (*PodStatusRequest) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{24} }
+func (m *PodStatusRequest) Reset()         { *m = PodStatusRequest{} }
+func (m *PodStatusRequest) String() string { return proto.CompactTextString(m) }
+func (*PodStatusRequest) ProtoMessage()    {}
 
 func (m *PodStatusRequest) GetNetwork() *Network {
 	if m != nil {
@@ -432,10 +401,9 @@ type PodStatusResponse struct {
 	Error string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (m *PodStatusResponse) Reset()                    { *m = PodStatusResponse{} }
-func (m *PodStatusResponse) String() string            { return proto.CompactTextString(m) }
-func (*PodStatusResponse) ProtoMessage()               {}
-func (*PodStatusResponse) Descriptor() ([]byte, []int) { return fileDescriptorTypes, []int{25} }
+func (m *PodStatusResponse) Reset()         { *m = PodStatusResponse{} }
+func (m *PodStatusResponse) String() string { return proto.CompactTextString(m) }
+func (*PodStatusResponse) ProtoMessage()    {}
 
 func init() {
 	proto.RegisterType((*ActiveRequest)(nil), "types.ActiveRequest")
@@ -469,10 +437,6 @@ func init() {
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
 var _ grpc.ClientConn
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion3
 
 // Client API for Networks service
 
@@ -562,112 +526,76 @@ func RegisterNetworksServer(s *grpc.Server, srv NetworksServer) {
 	s.RegisterService(&_Networks_serviceDesc, srv)
 }
 
-func _Networks_Active_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Networks_Active_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(ActiveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(NetworksServer).Active(ctx, in)
+	out, err := srv.(NetworksServer).Active(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Networks/Active",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworksServer).Active(ctx, req.(*ActiveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Networks_CheckTenantID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Networks_CheckTenantID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(CheckTenantIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(NetworksServer).CheckTenantID(ctx, in)
+	out, err := srv.(NetworksServer).CheckTenantID(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Networks/CheckTenantID",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworksServer).CheckTenantID(ctx, req.(*CheckTenantIDRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Networks_GetNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Networks_GetNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(GetNetworkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(NetworksServer).GetNetwork(ctx, in)
+	out, err := srv.(NetworksServer).GetNetwork(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Networks/GetNetwork",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworksServer).GetNetwork(ctx, req.(*GetNetworkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Networks_CreateNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Networks_CreateNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(CreateNetworkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(NetworksServer).CreateNetwork(ctx, in)
+	out, err := srv.(NetworksServer).CreateNetwork(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Networks/CreateNetwork",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworksServer).CreateNetwork(ctx, req.(*CreateNetworkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Networks_UpdateNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Networks_UpdateNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(UpdateNetworkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(NetworksServer).UpdateNetwork(ctx, in)
+	out, err := srv.(NetworksServer).UpdateNetwork(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Networks/UpdateNetwork",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworksServer).UpdateNetwork(ctx, req.(*UpdateNetworkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Networks_DeleteNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Networks_DeleteNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(DeleteNetworkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(NetworksServer).DeleteNetwork(ctx, in)
+	out, err := srv.(NetworksServer).DeleteNetwork(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Networks/DeleteNetwork",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworksServer).DeleteNetwork(ctx, req.(*DeleteNetworkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
 var _Networks_serviceDesc = grpc.ServiceDesc{
@@ -699,8 +627,7 @@ var _Networks_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Networks_DeleteNetwork_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptorTypes,
+	Streams: []grpc.StreamDesc{},
 }
 
 // Client API for LoadBalancers service
@@ -769,76 +696,52 @@ func RegisterLoadBalancersServer(s *grpc.Server, srv LoadBalancersServer) {
 	s.RegisterService(&_LoadBalancers_serviceDesc, srv)
 }
 
-func _LoadBalancers_GetLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LoadBalancers_GetLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(GetLoadBalancerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(LoadBalancersServer).GetLoadBalancer(ctx, in)
+	out, err := srv.(LoadBalancersServer).GetLoadBalancer(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.LoadBalancers/GetLoadBalancer",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoadBalancersServer).GetLoadBalancer(ctx, req.(*GetLoadBalancerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _LoadBalancers_CreateLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LoadBalancers_CreateLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(CreateLoadBalancerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(LoadBalancersServer).CreateLoadBalancer(ctx, in)
+	out, err := srv.(LoadBalancersServer).CreateLoadBalancer(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.LoadBalancers/CreateLoadBalancer",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoadBalancersServer).CreateLoadBalancer(ctx, req.(*CreateLoadBalancerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _LoadBalancers_UpdateLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LoadBalancers_UpdateLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(UpdateLoadBalancerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(LoadBalancersServer).UpdateLoadBalancer(ctx, in)
+	out, err := srv.(LoadBalancersServer).UpdateLoadBalancer(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.LoadBalancers/UpdateLoadBalancer",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoadBalancersServer).UpdateLoadBalancer(ctx, req.(*UpdateLoadBalancerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _LoadBalancers_DeleteLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LoadBalancers_DeleteLoadBalancer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(DeleteLoadBalancerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(LoadBalancersServer).DeleteLoadBalancer(ctx, in)
+	out, err := srv.(LoadBalancersServer).DeleteLoadBalancer(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.LoadBalancers/DeleteLoadBalancer",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoadBalancersServer).DeleteLoadBalancer(ctx, req.(*DeleteLoadBalancerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
 var _LoadBalancers_serviceDesc = grpc.ServiceDesc{
@@ -862,8 +765,7 @@ var _LoadBalancers_serviceDesc = grpc.ServiceDesc{
 			Handler:    _LoadBalancers_DeleteLoadBalancer_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptorTypes,
+	Streams: []grpc.StreamDesc{},
 }
 
 // Client API for Pods service
@@ -921,58 +823,40 @@ func RegisterPodsServer(s *grpc.Server, srv PodsServer) {
 	s.RegisterService(&_Pods_serviceDesc, srv)
 }
 
-func _Pods_SetupPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Pods_SetupPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(SetupPodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(PodsServer).SetupPod(ctx, in)
+	out, err := srv.(PodsServer).SetupPod(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Pods/SetupPod",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PodsServer).SetupPod(ctx, req.(*SetupPodRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Pods_TeardownPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Pods_TeardownPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(TeardownPodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(PodsServer).TeardownPod(ctx, in)
+	out, err := srv.(PodsServer).TeardownPod(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Pods/TeardownPod",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PodsServer).TeardownPod(ctx, req.(*TeardownPodRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
-func _Pods_PodStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Pods_PodStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(PodStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(PodsServer).PodStatus(ctx, in)
+	out, err := srv.(PodsServer).PodStatus(ctx, in)
+	if err != nil {
+		return nil, err
 	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/types.Pods/PodStatus",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PodsServer).PodStatus(ctx, req.(*PodStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return out, nil
 }
 
 var _Pods_serviceDesc = grpc.ServiceDesc{
@@ -992,78 +876,5 @@ var _Pods_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Pods_PodStatus_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptorTypes,
-}
-
-func init() { proto.RegisterFile("types.proto", fileDescriptorTypes) }
-
-var fileDescriptorTypes = []byte{
-	// 1049 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xdc, 0x57, 0x5f, 0x6f, 0xdb, 0x36,
-	0x10, 0x9f, 0xec, 0xc8, 0xb1, 0xcf, 0x49, 0x9c, 0xb2, 0x69, 0xaa, 0x78, 0x5d, 0x91, 0x09, 0xfb,
-	0x13, 0x0c, 0x43, 0x37, 0x78, 0x0f, 0x5d, 0xb1, 0x97, 0x74, 0x4e, 0xb1, 0x05, 0x28, 0xba, 0x40,
-	0xc9, 0x9e, 0xf6, 0x30, 0xb0, 0x16, 0x93, 0x08, 0x75, 0x48, 0x4d, 0xa4, 0x93, 0xe6, 0x65, 0x1f,
-	0x63, 0x1f, 0x62, 0xc0, 0xbe, 0xc2, 0x9e, 0xf7, 0xba, 0x61, 0x9f, 0x63, 0x9f, 0x61, 0xa4, 0x44,
-	0xd2, 0x94, 0x25, 0x19, 0x5e, 0xf7, 0xd6, 0x37, 0xf1, 0xee, 0xf8, 0xe3, 0xdd, 0x8f, 0x77, 0xc7,
-	0x13, 0xf4, 0xc5, 0x6d, 0x4a, 0xf8, 0xa3, 0x34, 0x63, 0x82, 0x21, 0x3f, 0x5f, 0x84, 0x03, 0xd8,
-	0x7c, 0x3a, 0x11, 0xc9, 0x35, 0x89, 0xc8, 0x4f, 0x33, 0xc2, 0x45, 0x78, 0x08, 0xdb, 0xb9, 0x00,
-	0x0b, 0x29, 0xe2, 0x29, 0xa3, 0x9c, 0xa0, 0x5d, 0xe8, 0x64, 0x84, 0xcf, 0xa6, 0x22, 0xf0, 0xf6,
-	0xbd, 0x83, 0x6e, 0xa4, 0x57, 0x68, 0x07, 0x7c, 0x92, 0x65, 0x2c, 0x0b, 0x5a, 0x52, 0xdc, 0x8b,
-	0x8a, 0x45, 0xf8, 0x11, 0x6c, 0x8d, 0xd9, 0xd5, 0x15, 0xa3, 0x76, 0xbf, 0xb5, 0xf3, 0x5c, 0xbb,
-	0xdf, 0x3d, 0xe8, 0x9c, 0xce, 0x5e, 0x52, 0x22, 0x10, 0x82, 0x35, 0x8a, 0xaf, 0x88, 0xd6, 0xe7,
-	0xdf, 0x68, 0x1b, 0xda, 0xb3, 0x24, 0xd6, 0xd0, 0xea, 0x53, 0x59, 0x4d, 0x92, 0x38, 0x0b, 0xda,
-	0x85, 0x95, 0xfa, 0x46, 0x01, 0xac, 0x5f, 0x48, 0x57, 0x6f, 0xf0, 0x6d, 0xb0, 0x96, 0x8b, 0xcd,
-	0x12, 0x0d, 0xa1, 0x2b, 0x08, 0xc5, 0x54, 0x48, 0x10, 0x3f, 0x57, 0xd9, 0x35, 0x7a, 0x08, 0x10,
-	0x53, 0xce, 0x49, 0x76, 0x4d, 0x32, 0x1e, 0x74, 0xf6, 0xdb, 0x52, 0xeb, 0x48, 0xd0, 0x07, 0x32,
-	0x60, 0x36, 0x13, 0x84, 0x07, 0xeb, 0x52, 0xd7, 0x1f, 0x6d, 0x3c, 0x2a, 0xa8, 0x8b, 0x94, 0x30,
-	0xd2, 0xba, 0xf0, 0x47, 0xf0, 0x73, 0x41, 0xad, 0xfb, 0xd2, 0x31, 0x4a, 0x5e, 0x8b, 0x4b, 0x96,
-	0xea, 0x10, 0xcc, 0x12, 0x1d, 0xc0, 0x20, 0x96, 0x4c, 0x27, 0x14, 0x8b, 0x84, 0xd1, 0xf1, 0xf1,
-	0x51, 0xa4, 0x23, 0x5a, 0x14, 0x87, 0xbf, 0x7a, 0xb0, 0xfe, 0x82, 0x88, 0x1b, 0x96, 0xbd, 0x5a,
-	0x91, 0x22, 0x1b, 0xf4, 0xf1, 0x91, 0x06, 0xb5, 0x6b, 0xf4, 0x00, 0x7a, 0x9c, 0x5c, 0x5c, 0x91,
-	0x5c, 0xa9, 0xc8, 0xf2, 0xa3, 0xb9, 0x00, 0x7d, 0x0c, 0xeb, 0x3c, 0xbf, 0x0c, 0x2e, 0xd9, 0x52,
-	0x31, 0x6f, 0xea, 0x98, 0x8b, 0x2b, 0x8a, 0x8c, 0x56, 0x25, 0x03, 0x17, 0x58, 0xcc, 0x14, 0x6f,
-	0xea, 0x00, 0xbd, 0x0a, 0x1f, 0xc3, 0x9d, 0x6f, 0x88, 0xd0, 0xee, 0xea, 0x6c, 0xaa, 0xf5, 0x7a,
-	0x0b, 0x5a, 0xd6, 0x69, 0xf9, 0x15, 0x9e, 0x01, 0x72, 0x37, 0xea, 0x9c, 0x39, 0x50, 0xfc, 0xe5,
-	0xa2, 0x7c, 0x73, 0x7f, 0xb4, 0xa5, 0xfd, 0x31, 0x86, 0x46, 0xdd, 0x90, 0x85, 0x87, 0xb0, 0x33,
-	0xce, 0x88, 0xcc, 0x85, 0x05, 0x8f, 0x56, 0xc6, 0x55, 0x08, 0xdf, 0xa7, 0xf1, 0xff, 0x41, 0xf8,
-	0x12, 0x76, 0x8e, 0xc8, 0x94, 0x54, 0x10, 0xf6, 0xa1, 0xaf, 0x4d, 0x5e, 0xcc, 0xc9, 0x71, 0x45,
-	0xe1, 0xa7, 0xb0, 0x2b, 0x39, 0x79, 0xce, 0x70, 0xfc, 0x35, 0x9e, 0x62, 0x3a, 0x21, 0xd9, 0x12,
-	0x46, 0xc3, 0x4b, 0xb8, 0x5f, 0xb1, 0xd6, 0x34, 0x3e, 0x86, 0x8d, 0xa9, 0x23, 0xd7, 0x1e, 0xdf,
-	0xd5, 0x1e, 0x97, 0xb6, 0x94, 0x0c, 0x1b, 0x58, 0xfd, 0x19, 0xba, 0xdf, 0x32, 0x2e, 0x4e, 0x58,
-	0x56, 0x7f, 0xb7, 0x32, 0xc7, 0x92, 0x14, 0xc7, 0xb1, 0x6c, 0x10, 0x5c, 0xef, 0x9c, 0x0b, 0x54,
-	0xdc, 0xaa, 0xc2, 0x92, 0x09, 0x51, 0x00, 0x79, 0x82, 0xfa, 0x91, 0x2b, 0x52, 0x85, 0x29, 0x70,
-	0x76, 0x41, 0xf2, 0x13, 0x74, 0x92, 0x3a, 0x92, 0xf0, 0x97, 0x16, 0x6c, 0xb8, 0x4e, 0xaf, 0x58,
-	0x16, 0x52, 0x72, 0x9d, 0xa4, 0xba, 0x22, 0xd4, 0xa7, 0x2a, 0x42, 0x27, 0xdc, 0x33, 0xc9, 0x86,
-	0xee, 0x1f, 0x8b, 0x62, 0x27, 0xdf, 0x7d, 0x37, 0xdf, 0x4b, 0xa5, 0xd6, 0x59, 0x28, 0x35, 0x19,
-	0xa8, 0x2c, 0x76, 0x92, 0x51, 0x3c, 0x3d, 0x3e, 0x29, 0x9a, 0x88, 0xbc, 0x60, 0x47, 0xe4, 0x96,
-	0x5b, 0x77, 0x69, 0xb9, 0x7d, 0x08, 0xfe, 0xa5, 0x64, 0x9c, 0x07, 0xbd, 0xdc, 0x6c, 0xa0, 0xcd,
-	0xcc, 0x2d, 0x44, 0x85, 0x36, 0x4c, 0x61, 0xaf, 0x48, 0xf7, 0xba, 0x9c, 0x79, 0xe3, 0x24, 0x90,
-	0x31, 0xe2, 0xf3, 0xf3, 0x84, 0x26, 0xe2, 0x56, 0xd3, 0x69, 0xd7, 0xe1, 0x11, 0x0c, 0xeb, 0x4e,
-	0xd4, 0x79, 0xa7, 0x19, 0xf7, 0xe6, 0x8c, 0xd7, 0x27, 0xd4, 0x6b, 0xd8, 0x2b, 0x8a, 0x6c, 0xc5,
-	0x5c, 0x5f, 0xa4, 0xb6, 0x55, 0xa5, 0xd6, 0x32, 0xd6, 0x5e, 0xca, 0x98, 0xf4, 0xbf, 0xee, 0xe4,
-	0xff, 0xe8, 0xff, 0x67, 0xb0, 0x57, 0x94, 0xf8, 0xaa, 0xb5, 0x3a, 0x92, 0x7d, 0xe9, 0x92, 0x4c,
-	0x5e, 0x9d, 0xe9, 0x5c, 0x31, 0xb6, 0x6e, 0x3a, 0x79, 0xe5, 0x74, 0x0a, 0x9f, 0xc1, 0xbd, 0x85,
-	0x3d, 0x6f, 0xf4, 0x30, 0xff, 0xe9, 0xc1, 0xe0, 0x94, 0x88, 0x59, 0x7a, 0xc2, 0x62, 0x73, 0xac,
-	0x7c, 0xa6, 0x52, 0x16, 0x3b, 0x6d, 0xc8, 0x2c, 0x55, 0x29, 0x2b, 0x87, 0x79, 0x8a, 0x27, 0xc4,
-	0x94, 0xb2, 0x15, 0xa0, 0x4f, 0x60, 0x7b, 0xc2, 0xa8, 0xc0, 0x09, 0x95, 0xe1, 0xce, 0xe4, 0xa3,
-	0x2a, 0x01, 0x8a, 0xf2, 0xaa, 0xc8, 0xd1, 0xe7, 0x70, 0x57, 0x82, 0x1e, 0xd3, 0xf3, 0x0c, 0x8f,
-	0x8d, 0x4e, 0x3f, 0x41, 0xbd, 0xa8, 0x4e, 0xe5, 0xb6, 0x58, 0x7f, 0x79, 0x8b, 0xfd, 0xdb, 0x03,
-	0x74, 0x46, 0x70, 0x16, 0xb3, 0x1b, 0xfa, 0x16, 0x85, 0xf5, 0x97, 0x07, 0xdb, 0x32, 0x9c, 0xd3,
-	0xbc, 0xd5, 0xbc, 0x2d, 0x41, 0x3d, 0x81, 0x3b, 0x4e, 0x4c, 0x3a, 0x85, 0xd5, 0x34, 0x60, 0xea,
-	0xac, 0xd5, 0x54, 0x66, 0xa3, 0xdf, 0xda, 0xd0, 0xd5, 0x78, 0x1c, 0x3d, 0x81, 0x4e, 0x31, 0xb3,
-	0xa2, 0x1d, 0x7d, 0x54, 0x69, 0x84, 0x1d, 0xde, 0x77, 0xa5, 0xce, 0x1c, 0x1b, 0xbe, 0x83, 0x9e,
-	0xc3, 0x66, 0xa9, 0x92, 0xd0, 0xbb, 0xda, 0xb6, 0xae, 0x26, 0x87, 0x0f, 0xea, 0x95, 0x16, 0x6d,
-	0x0c, 0x30, 0x9f, 0x5c, 0x50, 0xa0, 0xad, 0x2b, 0x53, 0xd0, 0x70, 0xaf, 0x46, 0x63, 0x41, 0x9e,
-	0x49, 0x97, 0xdc, 0x41, 0x65, 0xee, 0x52, 0xcd, 0xf8, 0x32, 0xbc, 0x67, 0x94, 0xa5, 0x09, 0xbb,
-	0x80, 0x29, 0x4d, 0x2b, 0x16, 0xa6, 0x6e, 0x86, 0x59, 0x0a, 0x53, 0x1a, 0x59, 0x2c, 0x4c, 0xdd,
-	0x20, 0xd3, 0x08, 0x33, 0xfa, 0xa7, 0x05, 0x9b, 0x6e, 0x47, 0xe4, 0x28, 0x82, 0xc1, 0xc2, 0x8c,
-	0x82, 0xde, 0x9b, 0xd3, 0x52, 0xd3, 0x3d, 0x87, 0x0f, 0x9b, 0xd4, 0xd6, 0xd9, 0x1f, 0x00, 0x55,
-	0x9f, 0x20, 0xb4, 0x5f, 0xe2, 0xaf, 0x0e, 0xf9, 0xfd, 0x25, 0x16, 0x2e, 0x78, 0xf5, 0x7d, 0xb0,
-	0xe0, 0x8d, 0x8f, 0x96, 0x05, 0x6f, 0x7e, 0x5c, 0x24, 0xf8, 0x77, 0x80, 0xaa, 0xcf, 0x86, 0x05,
-	0x6f, 0x7c, 0x51, 0x9a, 0x09, 0xff, 0xc3, 0x83, 0x35, 0x59, 0x5c, 0x1c, 0x7d, 0x05, 0x5d, 0xd3,
-	0xe3, 0xd1, 0xae, 0x99, 0x29, 0xca, 0x4d, 0xbf, 0xf9, 0xf6, 0x9f, 0x42, 0xdf, 0x69, 0xa6, 0xc8,
-	0xe4, 0x6d, 0xb5, 0xc1, 0x36, 0x43, 0x1c, 0x42, 0xcf, 0x16, 0x39, 0x32, 0x95, 0xb8, 0xd8, 0xca,
-	0x86, 0x41, 0x55, 0x61, 0x10, 0x5e, 0x76, 0xf2, 0x1f, 0xd4, 0x2f, 0xfe, 0x0d, 0x00, 0x00, 0xff,
-	0xff, 0x95, 0x1b, 0x05, 0x9f, 0xaf, 0x0e, 0x00, 0x00,
+	Streams: []grpc.StreamDesc{},
 }
