@@ -28,6 +28,11 @@ import (
 	"code.google.com/p/gcfg"
 	"github.com/docker/distribution/uuid"
 	"github.com/golang/glog"
+	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/layer3/routers"
+	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/portsbinding"
+	"github.com/gophercloud/gophercloud/openstack/networking/v2/networks"
+	"github.com/gophercloud/gophercloud/openstack/networking/v2/ports"
+	"github.com/gophercloud/gophercloud/openstack/networking/v2/subnets"
 	"github.com/heartlock/harmonystack/pkg/plugins"
 	provider "github.com/heartlock/harmonystack/pkg/types"
 
