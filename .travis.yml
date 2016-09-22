@@ -1,0 +1,11 @@
+language: go
+
+matrix:
+  include:
+    - go: 1.5
+    - tip
+
+install:
+  - cd ${TRAVIS_BUILD_DIR}
+  - make
+  
