@@ -1,0 +1,18 @@
+sudo: required
+dist: trusty
+
+language: go
+
+matrix:
+  include:
+    - go: 1.5
+    - tip
+
+before_install:
+
+install:
+  - cd ${TRAVIS_BUILD_DIR}
+  - make
+
+script:
+  
