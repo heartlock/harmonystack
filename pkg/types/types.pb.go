@@ -442,7 +442,6 @@ var _ grpc.ClientConn
 
 type NetworksClient interface {
 	Active(ctx context.Context, in *ActiveRequest, opts ...grpc.CallOption) (*ActivateResponse, error)
-	CheckTenantID(ctx context.Context, in *CheckTenantIDRequest, opts ...grpc.CallOption) (*CheckTenantIDResponse, error)
 	GetNetwork(ctx context.Context, in *GetNetworkRequest, opts ...grpc.CallOption) (*GetNetworkResponse, error)
 	CreateNetwork(ctx context.Context, in *CreateNetworkRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 	UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*CommonResponse, error)
@@ -460,15 +459,6 @@ func NewNetworksClient(cc *grpc.ClientConn) NetworksClient {
 func (c *networksClient) Active(ctx context.Context, in *ActiveRequest, opts ...grpc.CallOption) (*ActivateResponse, error) {
 	out := new(ActivateResponse)
 	err := grpc.Invoke(ctx, "/types.Networks/Active", in, out, c.cc, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *networksClient) CheckTenantID(ctx context.Context, in *CheckTenantIDRequest, opts ...grpc.CallOption) (*CheckTenantIDResponse, error) {
-	out := new(CheckTenantIDResponse)
-	err := grpc.Invoke(ctx, "/types.Networks/CheckTenantID", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -515,7 +505,6 @@ func (c *networksClient) DeleteNetwork(ctx context.Context, in *DeleteNetworkReq
 
 type NetworksServer interface {
 	Active(context.Context, *ActiveRequest) (*ActivateResponse, error)
-	CheckTenantID(context.Context, *CheckTenantIDRequest) (*CheckTenantIDResponse, error)
 	GetNetwork(context.Context, *GetNetworkRequest) (*GetNetworkResponse, error)
 	CreateNetwork(context.Context, *CreateNetworkRequest) (*CommonResponse, error)
 	UpdateNetwork(context.Context, *UpdateNetworkRequest) (*CommonResponse, error)
@@ -532,18 +521,6 @@ func _Networks_Active_Handler(srv interface{}, ctx context.Context, dec func(int
 		return nil, err
 	}
 	out, err := srv.(NetworksServer).Active(ctx, in)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func _Networks_CheckTenantID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
-	in := new(CheckTenantIDRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	out, err := srv.(NetworksServer).CheckTenantID(ctx, in)
 	if err != nil {
 		return nil, err
 	}
@@ -605,10 +582,6 @@ var _Networks_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Active",
 			Handler:    _Networks_Active_Handler,
-		},
-		{
-			MethodName: "CheckTenantID",
-			Handler:    _Networks_CheckTenantID_Handler,
 		},
 		{
 			MethodName: "GetNetwork",
