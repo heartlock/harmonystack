@@ -105,20 +105,7 @@ message HostPort {
     int32 targetPort      = 4;
 }
 
-// LoadBalancer is a replace of kube-proxy, so load-balancing can be handled
-// by network providers so as to overcome iptables overhead
-message LoadBalancer {
-	string name                 = 1;
-	string uid         = 2;
-	string vip         = 3;
-	// Valid values: "TCP", "UDP", "HTTP", "HTTPS"
-	string loadBalanceType      = 4;
-    string status      = 5;
-    string tenantID             = 6;
-    repeated string externalIPs = 7;
-    repeated Subnet subnets     = 8;
-    repeated HostPort hosts     = 9;
-}
+
 
 message CreateLoadBalancerRequest {
     LoadBalancer loadBalancer   = 1;
