@@ -22,7 +22,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"strings"
 
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/layer3/routers"
@@ -30,7 +29,6 @@ import (
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/networks"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/ports"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/subnets"
-	"github.com/gophercloud/gophercloud/pagination"
 )
 
 type OpenDaylightClient struct {
@@ -40,8 +38,8 @@ type OpenDaylightClient struct {
 	HTTPClient http.Client
 }
 
-func NewOpenDaylightClient(config *Config) (OpenDaylightClient, error) {
-	return OpenDaylightClient{
+func NewOpenDaylightClient(config *Config) (*OpenDaylightClient, error) {
+	return &OpenDaylightClient{
 		BaseUrl:    config.Global.Url,
 		HTTPClient: *http.DefaultClient,
 	}, nil
@@ -154,38 +152,6 @@ func (client *OpenDaylightClient) Request(method, url string, options *RequestOp
 			err = ErrDefault400{respErr}
 			if error400er, ok := errType.(Err400er); ok {
 				err = error400er.Error400(respErr)
-			}
-		case http.StatusUnauthorized:
-			if client.ReauthFunc != nil {
-				err = client.ReauthFunc()
-				if err != nil {
-					e := &ErrUnableToReauthenticate{}
-					e.ErrOriginal = respErr
-					return nil, e
-				}
-				if options.RawBody != nil {
-					if seeker, ok := options.RawBody.(io.Seeker); ok {
-						seeker.Seek(0, 0)
-					}
-				}
-				resp, err = client.Request(method, url, options)
-				if err != nil {
-					switch err.(type) {
-					case *ErrUnexpectedResponseCode:
-						e := &ErrErrorAfterReauthentication{}
-						e.ErrOriginal = err.(*ErrUnexpectedResponseCode)
-						return nil, e
-					default:
-						e := &ErrErrorAfterReauthentication{}
-						e.ErrOriginal = err
-						return nil, e
-					}
-				}
-				return resp, nil
-			}
-			err = ErrDefault401{respErr}
-			if error401er, ok := errType.(Err401er); ok {
-				err = error401er.Error401(respErr)
 			}
 		case http.StatusNotFound:
 			err = ErrDefault404{respErr}
@@ -366,22 +332,21 @@ func (client *OpenDaylightClient) CreateNetwork(opts networks.CreateOpts) (r net
 
 func (client *OpenDaylightClient) DeleteNetwork(networkId string) (r networks.DeleteResult) {
 	url := client.BaseUrl + "/v2.0/network/" + networkId
-	_, r.Err = client.Delete(deleteURL(c, networkID), nil)
+	_, r.Err = client.Delete(url, nil)
 	return
 }
 
-func (client *OpenDaylightClient) ListNetwork(opts *networks.ListOpts) pagination.Pager {
+func (client *OpenDaylightClient) ListNetwork(opts *networks.ListOpts) ([]networks.Network, error) {
 	url := client.BaseUrl + "/v2.0/networks/"
 	if opts != nil {
 		query, err := opts.ToNetworkListQuery()
 		if err != nil {
-			return pagination.Pager{Err: err}
+			return nil, err
 		}
 		url += query
 	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return NetworkPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	// TODO: get list of networks
+	return nil, nil
 }
 
 //TODO: update network
@@ -432,18 +397,17 @@ func (client *OpenDaylightClient) DeletePort(portId string) (r ports.DeleteResul
 	return
 }
 
-func (client *OpenDaylightClient) ListPort(opts ports.ListOpts) pagination.Pager {
+func (client *OpenDaylightClient) ListPort(opts ports.ListOptsBuilder) ([]ports.Port, error) {
 	url := client.BaseUrl + "/v2.0/ports/"
 	if opts != nil {
 		query, err := opts.ToPortListQuery()
 		if err != nil {
-			return pagination.Pager{Err: err}
+			return nil, err
 		}
 		url += query
+		//TODO: get list of ports
 	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Pager {
-		return PortPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	return nil, nil
 }
 
 func (client *OpenDaylightClient) UpdatePort(portId string, opts portsbinding.UpdateOpts) (r portsbinding.UpdateResult) {
@@ -453,7 +417,7 @@ func (client *OpenDaylightClient) UpdatePort(portId string, opts portsbinding.Up
 		r.Err = err
 		return r
 	}
-	_, r.Err = client.Put(url, b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(url, b, &r.Body, &RequestOpts{
 		OkCodes: []int{200, 201},
 	})
 	return
@@ -467,7 +431,7 @@ func (client *OpenDaylightClient) CreateRouter(opts routers.CreateOpts) (r route
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(rootURL(c), b, &r.Body, nil)
+	_, r.Err = client.Post(url, b, &r.Body, nil)
 	return
 }
 
@@ -477,16 +441,15 @@ func (client *OpenDaylightClient) DeleteRouter(routerId string) (r routers.Delet
 	return
 }
 
-func (client *OpenDaylightClient) ListRouter(opts routers.ListOpts) pagination.Pager {
+func (client *OpenDaylightClient) ListRouter(opts routers.ListOpts) ([]routers.Router, error) {
 	url := client.BaseUrl + "/v2.0/routers/"
 	q, err := gophercloud.BuildQueryString(&opts)
 	if err != nil {
-		return pagination.Pager{Err: err}
+		return nil, err
 	}
-	u := url + q.String()
-	return pagination.NewPager(client, u, func(r pagination.PageResult) pagination.Page {
-		return RouterPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	url += q.String()
+	//TODO: get list of routers
+	return nil, nil
 }
 
 func (client *OpenDaylightClient) UpdateRouter() {
@@ -501,7 +464,7 @@ func (client *OpenDaylightClient) AddInterface(routerId string, opts routers.Add
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Put(url, b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(url, b, &r.Body, &RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
@@ -514,7 +477,7 @@ func (client *OpenDaylightClient) RemoveInterface(routerId string, opts routers.
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Put(url, b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(url, b, &r.Body, &RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
