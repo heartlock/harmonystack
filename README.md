@@ -32,12 +32,6 @@ tenant-name = admin
 region = RegionOne
 ext-net-id = <Your-external-network-id>
 
-[LoadBalancer]
-create-monitor = yes
-monitor-delay = 1m
-monitor-timeout = 30s
-monitor-max-retries = 3
-
 [Plugin]
 plugin-name = ovs
 ```
