@@ -4,7 +4,9 @@ matrix:
   include:
     - go: 1.5
     - tip
-
+script:
+ - export GO15VENDOREXPERIMENT=1
+ 
 install:
   - cd ${TRAVIS_BUILD_DIR}
   - make
