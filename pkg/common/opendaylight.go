@@ -28,6 +28,7 @@ import (
 	"code.google.com/p/gcfg"
 	"github.com/docker/distribution/uuid"
 	"github.com/golang/glog"
+	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/layer3/routers"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/portsbinding"
 	"github.com/gophercloud/gophercloud/openstack/networking/v2/networks"
@@ -98,6 +99,7 @@ type Config struct {
 	Global struct {
 		Url string `gcfg:"auth-url"`
 		//TODO info for authorization
+		ExtNetID string
 	}
 	LoadBalancer LoadBalancerOpts
 	Plugin       PluginOpts
@@ -121,7 +123,6 @@ func NewOpenDaylight(config io.Reader) (*OpenDaylight, error) {
 
 	os := OpenDaylight{
 		odlClient:  odl,
-		lbOpts:     cfg.LoadBalancer,
 		pluginOpts: cfg.Plugin,
 		ExtNetID:   cfg.Global.ExtNetID,
 	}
@@ -166,26 +167,24 @@ func (os *OpenDaylight) getOpenDaylightNetworkByName(name string) (*networks.Net
 
 // Get opendaylight network
 func (os *OpenDaylight) getOpenDaylightNetwork(opts *networks.ListOpts) (*networks.Network, error) {
-	var osNetwork *Network
-	pager := os.odlClient.ListNetwork(*opts)
-	err := pager.EachPage(func(page pagination.Page) (bool, error) {
-		networkList, e := networks.ExtractNetworks(page)
-		if len(networkList) > 1 {
-			return false, ErrMultipleResults
-		}
+	var osNetwork *networks.Network
+	networkList, err := os.odlClient.ListNetwork(opts)
+	if err != nil {
+		return nil, err
+	}
+	if len(networkList) > 1 {
+		return nil, ErrMultipleResults
+	}
 
-		if len(networkList) == 1 {
-			osNetwork = &networkList[0]
-		}
+	if len(networkList) == 1 {
+		osNetwork = &networkList[0]
+	}
 
-		return true, e
-	})
-
-	if err == nil && osNetwork == nil {
+	if networkList == nil {
 		return nil, ErrNotFound
 	}
 
-	return osNetwork, err
+	return osNetwork, nil
 }
 
 // Get provider subnet by id
@@ -324,7 +323,7 @@ func (os *OpenDaylight) CreateNetwork(network *provider.Network) error {
 			GatewayIP:      &sub.Gateway,
 			DNSNameservers: sub.Dnsservers,
 		}
-		s, err := os.odlclient.CreateSubnet(subnetOpts).Extract()
+		s, err := os.odlClient.CreateSubnet(subnetOpts).Extract()
 		if err != nil {
 			glog.Errorf("Create opendaylight subnet %s failed: %v", sub.Name, err)
 			delErr := os.DeleteNetwork(network.Name)
@@ -362,21 +361,17 @@ func (os *OpenDaylight) getRouterByName(name string) (*routers.Router, error) {
 	var result *routers.Router
 
 	opts := routers.ListOpts{Name: name}
-	pager := os.odlClient.ListRouter(opts)
-	err := pager.EachPage(func(page pagination.Page) (bool, error) {
-		routerList, e := routers.ExtractRouters(page)
-		if len(routerList) > 1 {
-			return false, ErrMultipleResults
-		} else if len(routerList) == 1 {
-			result = &routerList[0]
-		}
-
-		return true, e
-	})
+	routerList, err := os.odlClient.ListRouter(opts)
 	if err != nil {
 		return nil, err
 	}
-
+	if len(routerList) > 1 {
+		return nil, ErrMultipleResults
+	} else if len(routerList) == 1 {
+		result = &routerList[0]
+	} else if routerList == nil {
+		return nil, ErrNotFound
+	}
 	return result, nil
 }
 
@@ -391,27 +386,22 @@ func (os *OpenDaylight) DeleteNetwork(networkName string) error {
 	if osNetwork != nil {
 		// Delete ports
 		opts := ports.ListOpts{NetworkID: osNetwork.ID}
-		pager := os.odlClient.ListPort(opts)
-		err := pager.EachPage(func(page pagination.Page) (bool, error) {
-			portList, err := ports.ExtractPorts(page)
+		portList, err := os.odlClient.ListPort(opts)
+		if err != nil {
+			return err
+		}
+
+		for _, port := range portList {
+			if port.DeviceOwner == "network:router_interface" {
+				continue
+			}
+
+			err = os.odlClient.DeletePort(port.ID).ExtractErr()
 			if err != nil {
-				glog.Errorf("Get opendaylight ports error: %v", err)
-				return false, err
+				glog.Warningf("Delete port %v failed: %v", port.ID, err)
 			}
+		}
 
-			for _, port := range portList {
-				if port.DeviceOwner == "network:router_interface" {
-					continue
-				}
-
-				err = os.odlClient.DeletePort(port.ID).ExtractErr()
-				if err != nil {
-					glog.Warningf("Delete port %v failed: %v", port.ID, err)
-				}
-			}
-
-			return true, nil
-		})
 		if err != nil {
 			glog.Errorf("Delete ports error: %v", err)
 		}
@@ -467,25 +457,16 @@ func (os *OpenDaylight) ListPorts(networkID, deviceOwner string) ([]ports.Port, 
 		NetworkID:   networkID,
 		DeviceOwner: deviceOwner,
 	}
-	pager := os.odlClient.ListPort(os.network, opts)
-	err := pager.EachPage(func(page pagination.Page) (bool, error) {
-		portList, err := ports.ExtractPorts(page)
-		if err != nil {
-			glog.Errorf("Get opendaylight ports error: %v", err)
-			return false, err
-		}
-
-		for _, port := range portList {
-			results = append(results, port)
-		}
-
-		return true, err
-	})
+	portList, err := os.odlClient.ListPort(opts)
 
 	if err != nil {
+		glog.Errorf("Get opendaylight ports error: %v", err)
 		return nil, err
 	}
 
+	for _, port := range portList {
+		results = append(results, port)
+	}
 	return results, nil
 }
 
@@ -493,23 +474,16 @@ func (os *OpenDaylight) ListPorts(networkID, deviceOwner string) ([]ports.Port, 
 
 // Create an port
 func (os *OpenDaylight) CreatePort(networkID, tenantID, portName, podHostname string) (*portsbinding.Port, error) {
-	securitygroup, err := os.ensureSecurityGroup(tenantID)
-	if err != nil {
-		glog.Errorf("EnsureSecurityGroup failed: %v", err)
-		return nil, err
-	}
-
 	opts := portsbinding.CreateOpts{
 		HostID:  getHostName(),
 		DNSName: podHostname,
 		CreateOptsBuilder: ports.CreateOpts{
-			NetworkID:      networkID,
-			Name:           portName,
-			AdminStateUp:   &adminStateUp,
-			TenantID:       tenantID,
-			DeviceID:       uuid.Generate().String(),
-			DeviceOwner:    fmt.Sprintf("compute:%s", getHostName()),
-			SecurityGroups: []string{securitygroup},
+			NetworkID:    networkID,
+			Name:         portName,
+			AdminStateUp: &adminStateUp,
+			TenantID:     tenantID,
+			DeviceID:     uuid.Generate().String(),
+			DeviceOwner:  fmt.Sprintf("compute:%s", getHostName()),
 		},
 	}
 
@@ -541,28 +515,22 @@ func (os *OpenDaylight) CreatePort(networkID, tenantID, portName, podHostname st
 
 func (os *OpenDaylight) GetPort(name string) (*ports.Port, error) {
 	opts := ports.ListOpts{Name: name}
-	pager := os.odlClient.List(opts)
-
+	portList, err := os.odlClient.ListPort(opts)
+	if err != nil {
+		glog.Errorf("Get opendaylight ports error: %v", err)
+		return nil, err
+	}
 	var port *ports.Port
-	err := pager.EachPage(func(page pagination.Page) (bool, error) {
-		portList, err := ports.ExtractPorts(page)
-		if err != nil {
-			glog.Errorf("Get opendaylight ports error: %v", err)
-			return false, err
-		}
 
-		if len(portList) > 1 {
-			return false, ErrMultipleResults
-		}
+	if len(portList) > 1 {
+		return nil, ErrMultipleResults
+	}
 
-		if len(portList) == 0 {
-			return false, ErrNotFound
-		}
+	if len(portList) == 0 {
+		return nil, ErrNotFound
+	}
 
-		port = &portList[0]
-
-		return true, err
-	})
+	port = &portList[0]
 
 	return port, err
 }

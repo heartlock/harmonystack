@@ -53,7 +53,6 @@ func (h *HarmonyHandler) Serve(addr string) error {
 }
 
 func (h *HarmonyHandler) registerServer() {
-	provider.RegisterLoadBalancersServer(h.server, h)
 	provider.RegisterNetworksServer(h.server, h)
 	provider.RegisterPodsServer(h.server, h)
 }
@@ -65,21 +64,6 @@ func (h *HarmonyHandler) Active(c context.Context, req *provider.ActiveRequest) 
 		Result: true,
 	}
 
-	return &resp, nil
-}
-
-func (h *HarmonyHandler) CheckTenantID(c context.Context, req *provider.CheckTenantIDRequest) (*provider.CheckTenantIDResponse, error) {
-	glog.V(4).Infof("CheckTenantID with request %v", req.TenantID)
-
-	resp := provider.CheckTenantIDResponse{}
-	checkResult, err := h.driver.CheckTenantID(req.TenantID)
-	if err != nil {
-		resp.Error = err.Error()
-	} else {
-		resp.Result = checkResult
-	}
-
-	glog.V(4).Infof("CheckTenantID result %v", resp)
 	return &resp, nil
 }
 
@@ -109,7 +93,6 @@ func (h *HarmonyHandler) CreateNetwork(c context.Context, req *provider.CreateNe
 	glog.V(4).Infof("CreateNetwork with request %v", req)
 
 	resp := provider.CommonResponse{}
-	req.Network.TenantID = h.driver.ToTenantID(req.Network.TenantID)
 	err := h.driver.CreateNetwork(req.Network)
 	if err != nil {
 		resp.Error = err.Error()
@@ -123,7 +106,6 @@ func (h *HarmonyHandler) UpdateNetwork(c context.Context, req *provider.UpdateNe
 	glog.V(4).Infof("UpdateNetwork with request %v", req.String())
 
 	resp := provider.CommonResponse{}
-	req.Network.TenantID = h.driver.ToTenantID(req.Network.TenantID)
 	err := h.driver.UpdateNetwork(req.Network)
 	if err != nil {
 		resp.Error = err.Error()
@@ -143,63 +125,6 @@ func (h *HarmonyHandler) DeleteNetwork(c context.Context, req *provider.DeleteNe
 	}
 
 	glog.V(4).Infof("DeleteNetwork result %v", resp)
-	return &resp, nil
-}
-
-func (h *HarmonyHandler) GetLoadBalancer(c context.Context, req *provider.GetLoadBalancerRequest) (*provider.GetLoadBalancerResponse, error) {
-	resp := provider.GetLoadBalancerResponse{}
-	lb, err := h.driver.GetLoadBalancer(req.Name)
-	if err != nil {
-		resp.Error = err.Error()
-	} else {
-		resp.LoadBalancer = lb
-	}
-
-	return &resp, nil
-}
-
-func (h *HarmonyHandler) CreateLoadBalancer(c context.Context, req *provider.CreateLoadBalancerRequest) (*provider.CreateLoadBalancerResponse, error) {
-	glog.V(4).Infof("CreateLoadBalancer with request %v", req.String())
-
-	resp := provider.CreateLoadBalancerResponse{}
-	req.LoadBalancer.TenantID = h.driver.ToTenantID(req.LoadBalancer.TenantID)
-	vip, err := h.driver.CreateLoadBalancer(req.LoadBalancer, string(req.Affinity))
-	if err != nil {
-		resp.Error = err.Error()
-	} else {
-		resp.Vip = vip
-	}
-
-	glog.V(4).Infof("CreateLoadBalancer result %v", resp)
-	return &resp, nil
-}
-
-func (h *HarmonyHandler) UpdateLoadBalancer(c context.Context, req *provider.UpdateLoadBalancerRequest) (*provider.UpdateLoadBalancerResponse, error) {
-	glog.V(4).Infof("UpdateLoadBalancer with request %v", req.String())
-
-	resp := provider.UpdateLoadBalancerResponse{}
-	vip, err := h.driver.UpdateLoadBalancer(req.Name, req.Hosts, req.ExternalIPs)
-	if err != nil {
-		resp.Error = err.Error()
-	} else {
-		resp.Vip = vip
-	}
-
-	glog.V(4).Infof("UpdateLoadBalancer result %v", resp)
-
-	return &resp, nil
-}
-
-func (h *HarmonyHandler) DeleteLoadBalancer(c context.Context, req *provider.DeleteLoadBalancerRequest) (*provider.CommonResponse, error) {
-	glog.V(4).Infof("DeleteLoadBalancer with request %v", req.String())
-
-	resp := provider.CommonResponse{}
-	err := h.driver.DeleteLoadBalancer(req.Name)
-	if err != nil {
-		resp.Error = err.Error()
-	}
-
-	glog.V(4).Infof("DeleteLoadBalancer result %v", resp)
 	return &resp, nil
 }
 

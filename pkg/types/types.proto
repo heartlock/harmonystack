@@ -6,7 +6,6 @@ package types;
 
 service Networks {
     rpc Active(ActiveRequest) returns (ActivateResponse) {}
-    rpc CheckTenantID(CheckTenantIDRequest) returns (CheckTenantIDResponse) {}
     rpc GetNetwork(GetNetworkRequest) returns (GetNetworkResponse) {}
     rpc CreateNetwork(CreateNetworkRequest) returns (CommonResponse) {}
     rpc UpdateNetwork(UpdateNetworkRequest) returns (CommonResponse) {}
